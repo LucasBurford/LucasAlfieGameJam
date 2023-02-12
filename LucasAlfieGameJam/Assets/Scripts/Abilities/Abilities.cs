@@ -6,7 +6,7 @@ public class Abilities : MonoBehaviour
 {
     public string Name;
     public uint Mana;
-    public uint Cooldown;
+    public float Cooldown;
     public  AudioClip Sound;
     public ParticleSystem VFX;
     public uint Damage;

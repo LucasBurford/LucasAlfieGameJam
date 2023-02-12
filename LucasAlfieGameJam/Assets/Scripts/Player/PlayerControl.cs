@@ -7,8 +7,11 @@ public class PlayerControl : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public Transform attackPoint;
+    public SpriteRenderer spriteRenderer;
+    public Animator animator;
     public LayerMask groundLayer;
     public LayerMask damageableLayer;
+
 
     public enum States
     {
@@ -16,6 +19,17 @@ public class PlayerControl : MonoBehaviour
         Stunned
     }
     public States currentState;
+
+    public enum AvailableAttacks
+    {
+        Melee,
+        RockBlast,
+        ChainLightning,
+        Scorch
+    }
+    public AvailableAttacks selectedAttack;
+
+    public int meleeComboCounter;
 
     public float moveSpeed;
     public float jumpHeight;
@@ -26,6 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     public bool canJump;
     public bool canAttack;
+    public bool isMeleeAttacking;
 
     // Start is called before the first frame update
     void Start()
@@ -39,11 +54,21 @@ public class PlayerControl : MonoBehaviour
         GetMovementInput();
         GetAttackInput();
         GroundCheck();
+        UpdateAnimations();
     }
 
     private void GetMovementInput()
     {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
+
+        if (Input.mousePosition.x > 590)
+        {
+            spriteRenderer.transform.localScale = new Vector3(1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+        }
+        else
+        {
+            spriteRenderer.transform.localScale = new Vector3(-1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+        }
 
         Vector2 movementVector = new Vector2(moveX, rb.velocity.y);
 
@@ -57,11 +82,61 @@ public class PlayerControl : MonoBehaviour
 
     private void GetAttackInput()
     {
+        #region Selecting attacks
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            selectedAttack = AvailableAttacks.Melee;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            selectedAttack = AvailableAttacks.RockBlast;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            selectedAttack = AvailableAttacks.ChainLightning;
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            selectedAttack = AvailableAttacks.Scorch;
+        }
+        #endregion
+
         if (Input.GetButton("Fire1") && canAttack)
         {
             canAttack = false;
-            StartMeleeAttack();
-            StartCoroutine(WaitToResetMeleeAttack());
+
+            switch (selectedAttack)
+            {
+                case AvailableAttacks.Melee:
+                    {
+                        isMeleeAttacking = true;
+                        meleeComboCounter++;
+                        StartMeleeAttack();
+                        StartCoroutine(WaitToResetAttack(meleeAttackCooldown));
+                        StartCoroutine(WaitToResetMeleeAttackAnim());
+                    }
+                    break;
+                case AvailableAttacks.RockBlast:
+                    {
+                        RockBlast.Cast();
+                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[0].Cooldown));
+                    }
+                    break;
+                case AvailableAttacks.ChainLightning:
+                    {
+                        ChainLightning.Cast();
+                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[1].Cooldown));
+                    }
+                    break;
+                case AvailableAttacks.Scorch:
+                    {
+                        Scorch.Cast();
+                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[2].Cooldown));
+                    }
+                    break;
+            }
+
+
         }
     }
 
@@ -82,10 +157,22 @@ public class PlayerControl : MonoBehaviour
         canJump = groundObjects.Length > 0;
     }
 
-    private IEnumerator WaitToResetMeleeAttack()
+    private void UpdateAnimations()
     {
-        yield return new WaitForSeconds(meleeAttackCooldown);
+        animator.SetFloat("MoveSpeed", rb.velocity.magnitude);
+        animator.SetBool("IsAttacking", isMeleeAttacking);
+    }
+
+    private IEnumerator WaitToResetAttack(float time)
+    {
+        yield return new WaitForSeconds(time);
         canAttack = true;
+    }
+
+    private IEnumerator WaitToResetMeleeAttackAnim()
+    {
+        yield return new WaitForSeconds(0.3f);
+        isMeleeAttacking = false;
     }
 
     private void OnDrawGizmos()
