@@ -2,25 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class ChainLightning : Abilities
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float chainDistance;
 
-    // Update is called once per frame
-    void Update()
+    public override void Cast(GameObject user)
     {
-        
-    }
-
-    static public void Cast()
-    {
-        print("Casting ChainLightning");
+        //MonoBehaviour.print("Casting ChainLightning");
 
         //Abilities ChainLightning = ActiveAbilityList.Find(x => x.Name == "ChainLightning");
+
+        Debug.Log("Chain Lightning");
 
     }
 }

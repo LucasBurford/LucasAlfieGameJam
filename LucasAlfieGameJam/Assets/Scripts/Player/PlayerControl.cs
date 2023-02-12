@@ -12,7 +12,6 @@ public class PlayerControl : MonoBehaviour
     public LayerMask groundLayer;
     public LayerMask damageableLayer;
 
-
     public enum States
     {
         Normal,
@@ -118,20 +117,20 @@ public class PlayerControl : MonoBehaviour
                     break;
                 case AvailableAttacks.RockBlast:
                     {
-                        RockBlast.Cast();
-                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[0].Cooldown));
+                        AbilityController.abilities[0].Cast(this.gameObject);
+                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[0].cooldown));
                     }
                     break;
                 case AvailableAttacks.ChainLightning:
                     {
-                        ChainLightning.Cast();
-                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[1].Cooldown));
+                        AbilityController.abilities[1].Cast(this.gameObject);
+                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[1].cooldown));
                     }
                     break;
                 case AvailableAttacks.Scorch:
                     {
-                        Scorch.Cast();
-                        StartCoroutine(WaitToResetAttack(Abilities.ActiveAbilityList[2].Cooldown));
+                        AbilityController.abilities[2].Cast(this.gameObject);
+                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[2].cooldown));
                     }
                     break;
             }

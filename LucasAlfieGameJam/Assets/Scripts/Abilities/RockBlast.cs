@@ -2,33 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu]
 public class RockBlast : Abilities
 {
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        //Name = "RockBlast";
-        //Mana = 2;
-        //Cooldown = 30;
-        ////Sound;
-        ////VFX;
-        //Damage = 10;
+    public float maxDistance;
+    public float projSpeed;
 
-        //ActiveAbilityList.Add(this);
-    }
+    //public GameObject rock;
 
-    // Update is called once per frame
-    void Update()
+    public override void Cast(GameObject user)
     {
-        
-    }
-
-    static public void Cast()
-    {
-        print("Casting RockBlast");
+        //MonoBehaviour.print("Casting RockBlast");
 
         //Abilities Rockblast = ActiveAbilityList.Find(x => x.Name == "RockBlast");
-        
+
+        Debug.Log("Rock Blast");
+
+        user.GetComponent<AbilityController>().GenerateRockBlastProjectile(projSpeed);
+       
     }
 }

@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 165416903}
   - component: {fileID: 165416907}
   - component: {fileID: 165416905}
-  - component: {fileID: 165416906}
+  - component: {fileID: 165416909}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -353,24 +353,6 @@ MonoBehaviour:
   canJump: 0
   canAttack: 1
   isMeleeAttacking: 0
---- !u!114 &165416906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 165416900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791bc5c56ff632242b1803910999b854, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: 
-  Mana: 0
-  Cooldown: 0
-  Sound: {fileID: 0}
-  VFX: {fileID: 0}
-  Damage: 0
 --- !u!70 &165416907
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -407,6 +389,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &165416909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165416900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3dc0f0c689975b4e95e98293d514073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rock: {fileID: 881205988657016355, guid: b6ca34b68e5b82041bc91494c20e7110, type: 3}
 --- !u!1 &212052759
 GameObject:
   m_ObjectHideFlags: 0
