@@ -5,15 +5,27 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public Rigidbody2D rb;
-
     public Transform groundCheck;
-
+    public Transform attackPoint;
     public LayerMask groundLayer;
+    public LayerMask damageableLayer;
+
+    public enum States
+    {
+        Normal,
+        Stunned
+    }
+    public States currentState;
 
     public float moveSpeed;
     public float jumpHeight;
 
+    public float meleeAttackDamage;
+    public float meleeAttackRange;
+    public float meleeAttackCooldown;
+
     public bool canJump;
+    public bool canAttack;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +36,12 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
+        GetMovementInput();
+        GetAttackInput();
         GroundCheck();
     }
 
-    private void GetInput()
+    private void GetMovementInput()
     {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
 
@@ -42,6 +55,26 @@ public class PlayerControl : MonoBehaviour
         rb.velocity = movementVector;
     }
 
+    private void GetAttackInput()
+    {
+        if (Input.GetButton("Fire1") && canAttack)
+        {
+            canAttack = false;
+            StartMeleeAttack();
+            StartCoroutine(WaitToResetMeleeAttack());
+        }
+    }
+
+    private void StartMeleeAttack()
+    {
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(attackPoint.position, meleeAttackRange, damageableLayer);
+
+        foreach (Collider2D col in hitObjects)
+        {
+            col.gameObject.GetComponent<IDamageable>().OnHit();
+        }
+    }
+
     private void GroundCheck()
     {
         Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundCheck.position, 0.5f, groundLayer);
@@ -49,9 +82,15 @@ public class PlayerControl : MonoBehaviour
         canJump = groundObjects.Length > 0;
     }
 
+    private IEnumerator WaitToResetMeleeAttack()
+    {
+        yield return new WaitForSeconds(meleeAttackCooldown);
+        canAttack = true;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(groundCheck.position, 0.5f);
+        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
     }
 }
