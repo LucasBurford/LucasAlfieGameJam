@@ -92,5 +92,6 @@ public class PlayerControl : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
+        Gizmos.DrawWireSphere(groundCheck.position, 0.5f);
     }
 }
