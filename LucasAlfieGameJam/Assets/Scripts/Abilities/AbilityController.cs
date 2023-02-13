@@ -41,14 +41,14 @@ public class AbilityController : MonoBehaviour
 
         if (player.transform.localScale == new Vector3(-1, 2, 1)) // If facing left
         {
-            actualRock = Instantiate(rock, new Vector2(player.transform.position.x - 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            actualRock = Instantiate(rockProjectile, new Vector2(player.transform.position.x - 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
             rgRock = actualRock.GetComponent<Rigidbody2D>();
             rgRock.AddForce(new Vector2(-1.0f, 0.0f) * rockBlast.projSpeed);
         }
 
         else if (player.transform.localScale == new Vector3(1, 2, 1)) // If facing right
         {
-            actualRock = Instantiate(rock, new Vector2(player.transform.position.x + 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            actualRock = Instantiate(rockProjectile, new Vector2(player.transform.position.x + 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
             rgRock = actualRock.GetComponent<Rigidbody2D>();
             rgRock.AddForce(new Vector2(1.0f, 0.0f) * rockBlast.projSpeed);
         }
