@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class Jar : MonoBehaviour, IDamageable
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public int maxGold;
 
     public void OnHit()
     {
-        print("Jar was hit");
+        FindObjectOfType<PlayerControl>().AddGold(Random.Range(0, maxGold));
+        Destroy(gameObject);
     }
 }

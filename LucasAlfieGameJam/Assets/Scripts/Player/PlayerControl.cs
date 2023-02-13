@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     public Transform attackPoint;
     public SpriteRenderer spriteRenderer;
     public Animator animator;
+    public TextMeshProUGUI interactText;
     public LayerMask groundLayer;
     public LayerMask damageableLayer;
 
@@ -28,10 +30,12 @@ public class PlayerControl : MonoBehaviour
     }
     public AvailableAttacks selectedAttack;
 
+    public int currentGold;
     public int meleeComboCounter;
 
     public float moveSpeed;
     public float jumpHeight;
+    public float climbSpeed;
 
     public float meleeAttackDamage;
     public float meleeAttackRange;
@@ -40,6 +44,7 @@ public class PlayerControl : MonoBehaviour
     public bool canJump;
     public bool canAttack;
     public bool isMeleeAttacking;
+    public bool isOnLadder;
 
     // Start is called before the first frame update
     void Start()
@@ -59,6 +64,18 @@ public class PlayerControl : MonoBehaviour
     private void GetMovementInput()
     {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
+        float moveY;
+
+        // If player is on a ladder, let them climb up it by adding/subtracting from Y position
+        if (isOnLadder)
+        {
+            moveY = Input.GetAxis("Vertical") * climbSpeed;
+        }
+        // If not, apply regular gravity
+        else
+        {
+            moveY = Physics2D.gravity.y;
+        }
 
         if (Input.mousePosition.x > 590)
         {
@@ -69,13 +86,16 @@ public class PlayerControl : MonoBehaviour
             spriteRenderer.transform.localScale = new Vector3(-1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
         }
 
+        // Create a vector to supply movement to rigid body
         Vector2 movementVector = new Vector2(moveX, rb.velocity.y);
 
+        // Allow player to jump by adding speed to Y position
         if (Input.GetKeyDown(KeyCode.Space) && canJump)
         {
             movementVector.y += jumpHeight;
         }
 
+        // Apply the move vector to the rigid body
         rb.velocity = movementVector;
     }
 
@@ -149,6 +169,24 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    public void AddGold(int amount)
+    {
+        currentGold += amount;
+    }
+
+    public void HandleInteractable(GameObject obj)
+    {
+        interactText.text = "E: Interact";
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            obj.GetComponent<IInteractable>().OnInteract();
+            obj.GetComponent<IInteractable>().Interacted = true;
+            obj.GetComponent<Collider2D>().isTrigger = true;
+            RemoveInteractText();
+        }
+    }
+
     private void GroundCheck()
     {
         Collider2D[] groundObjects = Physics2D.OverlapCircleAll(groundCheck.position, 0.5f, groundLayer);
@@ -160,6 +198,11 @@ public class PlayerControl : MonoBehaviour
     {
         animator.SetFloat("MoveSpeed", rb.velocity.magnitude);
         animator.SetBool("IsAttacking", isMeleeAttacking);
+    }
+
+    public void RemoveInteractText()
+    {
+        interactText.text = "";
     }
 
     private IEnumerator WaitToResetAttack(float time)
@@ -174,10 +217,16 @@ public class PlayerControl : MonoBehaviour
         isMeleeAttacking = false;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
-        Gizmos.DrawWireSphere(groundCheck.position, 0.5f);
+        isOnLadder = collision.gameObject.CompareTag("Ladder");
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ladder"))
+        {
+            isOnLadder = false;
+        }
     }
 }
