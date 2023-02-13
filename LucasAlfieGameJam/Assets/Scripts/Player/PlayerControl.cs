@@ -64,17 +64,31 @@ public class PlayerControl : MonoBehaviour
     private void GetMovementInput()
     {
         float moveX = Input.GetAxis("Horizontal") * moveSpeed;
-        float moveY;
+        float moveY = Input.GetAxis("Vertical") * moveSpeed;
 
         // If player is on a ladder, let them climb up it by adding/subtracting from Y position
         if (isOnLadder)
         {
-            moveY = Input.GetAxis("Vertical") * climbSpeed;
+            rb.gravityScale = 0;
+
+            if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+            {
+                rb.velocity = new Vector2(0, 0);
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.position = new Vector2(transform.position.x, transform.position.y + climbSpeed * Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                transform.position = new Vector2(transform.position.x, transform.position.y - climbSpeed * Time.deltaTime);
+            }
         }
         // If not, apply regular gravity
         else
         {
-            moveY = Physics2D.gravity.y;
+            rb.gravityScale = 1;
         }
 
         if (Input.mousePosition.x > 590)
