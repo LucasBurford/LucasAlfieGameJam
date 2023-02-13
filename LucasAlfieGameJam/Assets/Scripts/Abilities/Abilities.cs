@@ -12,8 +12,4 @@ public abstract class Abilities : ScriptableObject
     public float damage;
     private bool offCooldown;
 
-    public abstract void Cast(GameObject user);
-
-
-
 }

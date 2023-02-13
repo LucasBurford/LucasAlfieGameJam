@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Rock Blast
   mana: 5
-  cooldown: 2
+  cooldown: 1
   damage: 15
   maxDistance: 10
   projSpeed: 5

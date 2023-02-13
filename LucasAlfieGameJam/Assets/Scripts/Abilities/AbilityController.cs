@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class AbilityController : MonoBehaviour
 {
-    static public List<Abilities> abilities = new();
+    static public List<Abilities> unlockedAbilities = new();
     float cooldowns;
 
-    public GameObject rock;
+    public RockBlast rockBlast;
+    public ChainLightning chainLightning;
+    public Scorch scorch;
+
+    public GameObject rockProjectile; //Prefab for rockblast
+    public GameObject lightningProjectile; //Prefab for chain lightning
+    public GameObject scorchProjectile; //Prefab for scorch 
+
+    GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-        abilities.Add(ScriptableObject.CreateInstance<RockBlast>());
-        abilities.Add(ScriptableObject.CreateInstance<ChainLightning>());
-        abilities.Add(ScriptableObject.CreateInstance<Scorch>());
+        player = this.gameObject;
+
+        unlockedAbilities.Add(rockBlast);
+        unlockedAbilities.Add(chainLightning);
+        unlockedAbilities.Add(scorch);
+
     }
 
     // Update is called once per frame
@@ -23,29 +34,38 @@ public class AbilityController : MonoBehaviour
         
     }
 
-    public void GenerateRockBlastProjectile(float projSpeed) // Called here as a Scriptable Object Class cannot instantiate an object due to it not existing in the scene;
+    public void CastRockBlast() // Called here as a Scriptable Object Class cannot instantiate an object due to it not existing in the scene;
     {
-        GameObject player = this.gameObject;
-
-        Debug.Log(rock);
-
         GameObject actualRock;
-        actualRock = Instantiate(rock, player.transform.position, player.transform.rotation);
-
         Rigidbody2D rgRock;
-        rgRock = actualRock.GetComponent<Rigidbody2D>(); 
 
-        rgRock.AddForce(player.transform.forward * projSpeed); 
+        if (player.transform.localScale == new Vector3(-1, 2, 1)) // If facing left
+        {
+            actualRock = Instantiate(rock, new Vector2(player.transform.position.x - 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            rgRock = actualRock.GetComponent<Rigidbody2D>();
+            rgRock.AddForce(new Vector2(-1.0f, 0.0f) * rockBlast.projSpeed);
+        }
+
+        else if (player.transform.localScale == new Vector3(1, 2, 1)) // If facing right
+        {
+            actualRock = Instantiate(rock, new Vector2(player.transform.position.x + 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            rgRock = actualRock.GetComponent<Rigidbody2D>();
+            rgRock.AddForce(new Vector2(1.0f, 0.0f) * rockBlast.projSpeed);
+        }
+
+        //actualRock = Instantiate(rock, player.transform.position, player.transform.rotation);
+
+        
         
     }    
 
-    public void GenerateChainLightning()
+    public void CastChainLightning()
     {
-
+        print("Cast Chain Lightning");
     }
 
-    public void GenerateScorch()
+    public void CastScorch()
     {
-
+        print("Cast Scorch");
     }
 }

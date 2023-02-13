@@ -1670,6 +1670,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rock: {fileID: 881205988657016355, guid: b6ca34b68e5b82041bc91494c20e7110, type: 3}
+  rockBlast: {fileID: 11400000, guid: 83e22041850ce6f4c9216a9fb2a17a6d, type: 2}
+  chainLightning: {fileID: 11400000, guid: 8f6b5b3477d23ca44ba914026186f7ae, type: 2}
+  scorch: {fileID: 11400000, guid: 3b23c23ebfa360e43b44c68cc40faaaf, type: 2}
 --- !u!1 &168652024
 GameObject:
   m_ObjectHideFlags: 0

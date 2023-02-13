@@ -134,14 +134,15 @@ public class PlayerControl : MonoBehaviour
         }
         #endregion
 
-        if (Input.GetButton("Fire1") && canAttack)
+        if (Input.GetButtonDown("Fire1") && canAttack)
         {
-            canAttack = false;
+            //canAttack = false;
 
             switch (selectedAttack)
             {
                 case AvailableAttacks.Melee:
                     {
+                        canAttack = false;
                         isMeleeAttacking = true;
                         meleeComboCounter++;
                         StartMeleeAttack();
@@ -151,20 +152,37 @@ public class PlayerControl : MonoBehaviour
                     break;
                 case AvailableAttacks.RockBlast:
                     {
-                        AbilityController.abilities[0].Cast(this.gameObject);
-                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[0].cooldown));
+                        if (AbilityController.unlockedAbilities.Contains(GetComponent<AbilityController>().rockBlast))
+                        {
+                            canAttack = false;
+                            GetComponent<AbilityController>().CastRockBlast();
+                            StartCoroutine(WaitToResetAttack(GetComponent<AbilityController>().rockBlast.cooldown));
+                        }
+                        else print("RockBlast not yet unlocked");
+
+                        
                     }
                     break;
                 case AvailableAttacks.ChainLightning:
                     {
-                        AbilityController.abilities[1].Cast(this.gameObject);
-                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[1].cooldown));
+                        if (AbilityController.unlockedAbilities.Contains(GetComponent<AbilityController>().chainLightning))
+                        {
+                            canAttack = false;
+                            GetComponent<AbilityController>().CastChainLightning();
+                            StartCoroutine(WaitToResetAttack(GetComponent<AbilityController>().chainLightning.cooldown));
+                        }
+                        else print("ChainLightning not yet unlocked");
                     }
                     break;
                 case AvailableAttacks.Scorch:
                     {
-                        AbilityController.abilities[2].Cast(this.gameObject);
-                        StartCoroutine(WaitToResetAttack(AbilityController.abilities[2].cooldown));
+                        if (AbilityController.unlockedAbilities.Contains(GetComponent<AbilityController>().scorch))
+                        {
+                            canAttack = false;
+                            GetComponent<AbilityController>().CastScorch();
+                            StartCoroutine(WaitToResetAttack(GetComponent<AbilityController>().scorch.cooldown));
+                        }
+                        else print("Scorch not yet unlocked");
                     }
                     break;
             }
