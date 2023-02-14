@@ -557,7 +557,7 @@ MonoBehaviour:
   chainLightning: {fileID: 11400000, guid: 8f6b5b3477d23ca44ba914026186f7ae, type: 2}
   scorch: {fileID: 11400000, guid: 3b23c23ebfa360e43b44c68cc40faaaf, type: 2}
   rockProjectile: {fileID: 881205988657016355, guid: b6ca34b68e5b82041bc91494c20e7110, type: 3}
-  lightningProjectile: {fileID: 0}
+  lightningProjectile: {fileID: 178460, guid: 272a5010c292dcd4093a1d07571ebd92, type: 3}
   scorchProjectile: {fileID: 0}
 --- !u!1 &212052759
 GameObject:

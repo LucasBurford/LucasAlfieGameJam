@@ -19,6 +19,7 @@ public class AbilityController : MonoBehaviour
 
     GameObject actualRock;
     Rigidbody2D rgRock;
+    GameObject actualChainLightning;
 
     // Start is called before the first frame update
     void Start()
@@ -55,13 +56,23 @@ public class AbilityController : MonoBehaviour
             rgRock = actualRock.GetComponent<Rigidbody2D>();
             rgRock.AddForce(new Vector2(rockBlast.projSpeed, 0.0f));
         }
-
-        //Destroy(actualRock, rockBlast.maxDistanceTime);
     }    
 
     public void CastChainLightning()
     {
         print("Cast Chain Lightning");
+
+        if (user.transform.rotation.y == -1) // If facing left
+        {
+            actualChainLightning = Instantiate(lightningProjectile, new Vector2(user.transform.position.x - 5.0f , user.transform.position.y + 4.0f), user.transform.rotation);
+            
+        }
+
+        else if (user.transform.rotation.y == 0) // If facing right
+        {
+            actualChainLightning = Instantiate(lightningProjectile, new Vector2(user.transform.position.x + 5.0f , user.transform.position.y + 4.0f), user.transform.rotation);
+            
+        }
     }
 
     public void CastScorch()
