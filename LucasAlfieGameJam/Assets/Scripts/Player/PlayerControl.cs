@@ -93,11 +93,13 @@ public class PlayerControl : MonoBehaviour
 
         if (Input.mousePosition.x > 590)
         {
-            spriteRenderer.transform.localScale = new Vector3(1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+            //spriteRenderer.transform.localScale = new Vector3(1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+            this.gameObject.transform.rotation = Quaternion.Euler(transform.rotation.x, 0, transform.rotation.z); // Changed to work with game object rotation and uses angles instead of scale
         }
         else
         {
-            spriteRenderer.transform.localScale = new Vector3(-1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+            //spriteRenderer.transform.localScale = new Vector3(-1, spriteRenderer.transform.localScale.y, spriteRenderer.transform.localScale.z);
+            this.gameObject.transform.rotation = Quaternion.Euler(transform.rotation.x, -180, transform.rotation.z); // Changed to work with game object rotation and uses angles instead of scale
         }
 
         // Create a vector to supply movement to rigid body

@@ -15,12 +15,15 @@ public class AbilityController : MonoBehaviour
     public GameObject lightningProjectile; //Prefab for chain lightning
     public GameObject scorchProjectile; //Prefab for scorch 
 
-    GameObject player;
+    GameObject user;
+
+    GameObject actualRock;
+    Rigidbody2D rgRock;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = this.gameObject;
+        user = this.gameObject;
 
         unlockedAbilities.Add(rockBlast);
         unlockedAbilities.Add(chainLightning);
@@ -31,32 +34,29 @@ public class AbilityController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+       
+
     }
 
     public void CastRockBlast() // Called here as a Scriptable Object Class cannot instantiate an object due to it not existing in the scene;
     {
-        GameObject actualRock;
-        Rigidbody2D rgRock;
+        print("Cast Rock Blast");
 
-        if (player.transform.localScale == new Vector3(-1, 2, 1)) // If facing left
+        if (user.transform.rotation.y == -1) // If facing left
         {
-            actualRock = Instantiate(rockProjectile, new Vector2(player.transform.position.x - 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            actualRock = Instantiate(rockProjectile, new Vector2(user.transform.position.x - 2.0f, user.transform.position.y + 1.0f), user.transform.rotation);
             rgRock = actualRock.GetComponent<Rigidbody2D>();
-            rgRock.AddForce(new Vector2(-1.0f, 0.0f) * rockBlast.projSpeed);
+            rgRock.AddForce(new Vector2(-rockBlast.projSpeed, 0.0f));
         }
 
-        else if (player.transform.localScale == new Vector3(1, 2, 1)) // If facing right
+        else if (user.transform.rotation.y == 0) // If facing right
         {
-            actualRock = Instantiate(rockProjectile, new Vector2(player.transform.position.x + 2.0f, player.transform.position.y + 1.0f), player.transform.rotation);
+            actualRock = Instantiate(rockProjectile, new Vector2(user.transform.position.x + 2.0f, user.transform.position.y + 1.0f), user.transform.rotation);
             rgRock = actualRock.GetComponent<Rigidbody2D>();
-            rgRock.AddForce(new Vector2(1.0f, 0.0f) * rockBlast.projSpeed);
+            rgRock.AddForce(new Vector2(rockBlast.projSpeed, 0.0f));
         }
 
-        //actualRock = Instantiate(rock, player.transform.position, player.transform.rotation);
-
-        
-        
+        //Destroy(actualRock, rockBlast.maxDistanceTime);
     }    
 
     public void CastChainLightning()

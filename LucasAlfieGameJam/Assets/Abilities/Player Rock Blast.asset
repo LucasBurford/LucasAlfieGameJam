@@ -16,5 +16,5 @@ MonoBehaviour:
   mana: 5
   cooldown: 1
   damage: 15
-  maxDistance: 10
-  projSpeed: 5
+  timeToDestroy: 0.7
+  projSpeed: 500

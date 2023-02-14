@@ -10,6 +10,6 @@ public abstract class Abilities : ScriptableObject
     //public AudioClip sound;
     //public ParticleSystem VFX;
     public float damage;
-    private bool offCooldown;
+    public float timeToDestroy;
 
 }

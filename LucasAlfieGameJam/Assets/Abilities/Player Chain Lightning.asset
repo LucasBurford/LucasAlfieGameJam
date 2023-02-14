@@ -16,4 +16,5 @@ MonoBehaviour:
   mana: 15
   cooldown: 7
   damage: 12
+  timeToDestroy: 1
   chainDistance: 5
