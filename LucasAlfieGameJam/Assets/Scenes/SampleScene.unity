@@ -553,9 +553,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3dc0f0c689975b4e95e98293d514073, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockBlast: {fileID: 11400000, guid: 83e22041850ce6f4c9216a9fb2a17a6d, type: 2}
-  chainLightning: {fileID: 11400000, guid: 8f6b5b3477d23ca44ba914026186f7ae, type: 2}
-  scorch: {fileID: 11400000, guid: 3b23c23ebfa360e43b44c68cc40faaaf, type: 2}
+  rockBlast: {fileID: 11400000, guid: 1bbcd7f4644e5fb4a9d8071746d6c8d2, type: 2}
+  chainLightning: {fileID: 11400000, guid: 33a8a5c8bbceab5489881ee4b8170679, type: 2}
+  scorch: {fileID: 11400000, guid: 26024f7b06cf43e4aa0e1e1d0f162905, type: 2}
   rockProjectile: {fileID: 881205988657016355, guid: b6ca34b68e5b82041bc91494c20e7110, type: 3}
   lightningProjectile: {fileID: 178460, guid: 272a5010c292dcd4093a1d07571ebd92, type: 3}
   scorchProjectile: {fileID: 0}

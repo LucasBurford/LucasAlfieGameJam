@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3660c0b2a3a304148bbf1d5ea777dda9, type: 3}
-  m_Name: Player Scorch
+  m_Script: {fileID: 11500000, guid: 791bc5c56ff632242b1803910999b854, type: 3}
+  m_Name: Scorch - Player
   m_EditorClassIdentifier: 
-  abilityName: Scorch
-  mana: 1
-  cooldown: 5
-  damage: 2
-  timeToDestroy: 0.3
+  abilityName: 
+  mana: 0
+  cooldown: 0
+  damage: 0
+  timeToDestroy: 0
+  projSpeed: 0
+  chainDistance: 0

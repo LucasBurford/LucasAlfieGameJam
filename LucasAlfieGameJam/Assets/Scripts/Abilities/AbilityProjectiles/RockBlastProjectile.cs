@@ -14,6 +14,9 @@ public class RockBlastProjectile : MonoBehaviour
         rgProjectile = projectile.GetComponent<Rigidbody2D>();
 
         Invoke("ActivateDrop", AbilityController.unlockedAbilities[0].timeToDestroy);
+
+        rgProjectile.AddForce((projectile.transform.right * AbilityController.unlockedAbilities[0].projSpeed));
+
     }
 
     // Update is called once per frame
@@ -32,8 +35,10 @@ public class RockBlastProjectile : MonoBehaviour
         if (collision.gameObject.layer == 6) //6 is damageable layer
         {
             collision.gameObject.GetComponent<IDamageable>().OnHit();
+            
         }
 
         Destroy(projectile);
+
     }
 }

@@ -7,9 +7,13 @@ public class AbilityController : MonoBehaviour
     static public List<Abilities> unlockedAbilities = new();
     float cooldowns;
 
-    public RockBlast rockBlast;
-    public ChainLightning chainLightning;
-    public Scorch scorch;
+    //public RockBlast rockBlast;
+    //public ChainLightning chainLightning;
+    //public Scorch scorch;
+
+    public Abilities rockBlast;
+    public Abilities chainLightning;
+    public Abilities scorch;
 
     public GameObject rockProjectile; //Prefab for rockblast
     public GameObject lightningProjectile; //Prefab for chain lightning
@@ -46,15 +50,15 @@ public class AbilityController : MonoBehaviour
         if (user.transform.rotation.y == -1) // If facing left
         {
             actualRock = Instantiate(rockProjectile, new Vector2(user.transform.position.x - 2.0f, user.transform.position.y + 1.0f), user.transform.rotation);
-            rgRock = actualRock.GetComponent<Rigidbody2D>();
-            rgRock.AddForce(new Vector2(-rockBlast.projSpeed, 0.0f));
+            //rgRock = actualRock.GetComponent<Rigidbody2D>();
+            //rgRock.AddForce(new Vector2(-rockBlast.projSpeed, 0.0f));
         }
 
         else if (user.transform.rotation.y == 0) // If facing right
         {
             actualRock = Instantiate(rockProjectile, new Vector2(user.transform.position.x + 2.0f, user.transform.position.y + 1.0f), user.transform.rotation);
-            rgRock = actualRock.GetComponent<Rigidbody2D>();
-            rgRock.AddForce(new Vector2(rockBlast.projSpeed, 0.0f));
+            //rgRock = actualRock.GetComponent<Rigidbody2D>();
+            //rgRock.AddForce(new Vector2(rockBlast.projSpeed, 0.0f));
         }
     }    
 

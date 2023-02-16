@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3ddc888677e10c4aaca7ada7571bc0a, type: 3}
-  m_Name: Player Rock Blast
+  m_Script: {fileID: 11500000, guid: 791bc5c56ff632242b1803910999b854, type: 3}
+  m_Name: Chain Lightning - Player
   m_EditorClassIdentifier: 
-  abilityName: Rock Blast
-  mana: 5
-  cooldown: 1
-  damage: 15
-  timeToDestroy: 0.7
-  projSpeed: 500
+  abilityName: Chain Lightning
+  mana: 10
+  cooldown: 6
+  damage: 10
+  timeToDestroy: 0.3
+  projSpeed: 0
+  chainDistance: 10
